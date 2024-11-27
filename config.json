@@ -1,0 +1,18 @@
+{
+  "mode": "debug",
+  "service_name": "your_service_name",
+  "http_port": 8080,
+  "db": {
+    "host": "localhost",
+    "port": 5432,
+    "name": "one_pte_db",
+    "user": "admin",
+    "pass": "admin",
+    "max_idle_time_in_minute": 10,
+    "enable_ssl_mode": true
+  },
+  "migrations": "your_migrations_source",
+  "redis_url": "redis://localhost:6379",
+  "health_check_route": "/health",
+  "jwt_secret": "one_pte"
+}
