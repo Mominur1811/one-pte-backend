@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "6dd9e054-1a42-4303-b871-bc7a13092b9e",
+		"name": "onepte-api-momin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34750656"
+	},
+	"item": [
+		{
+			"name": "Get Questions List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"description": "StartFragment\n\n### **GET /get-questions**\n\n#### **Description**:\n\nFetch a list of questions based on the query parameter `type`.\n\n#### **Query Parameters**:\n\n- **type** (optional): The type of questions to retrieve. Valid values: `SST`, `RO`, `MCQ`.\n    \n\n#### **Request Example**:\n\n```\nhttp://localhost:8080/get-questions?type=SST\n\n ```\n\n#### **Response**:\n\n**HTTP Status: 200 OK**\n\n```\njsonCopy code{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"What is the capital of France?\",\n      \"type\": \"SST\",\n      \"create_at\": \"2024-12-01T08:10:09Z\"\n    },\n    {\n      \"id\": 2,\n      \"title\": \"What is 2 + 2?\",\n      \"type\": \"SST\",\n      \"create_at\": \"2024-12-01T08:10:09Z\"\n    }\n  ]\n}\n\n ```\n\n#### **Fields**:\n\n- **id**: (integer) Question ID\n    \n- **title**: (string) Question title\n    \n- **type**: (string) Question type (`SST`, `RO`, `MCQ`)\n    \n- **create_at**: (string) Timestamp of creation (ISO 8601)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Question by Id and type",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/get-question-details/1?type=SST",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"get-question-details",
+						"1"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "SST"
+						}
+					]
+				},
+				"description": "StartFragment\n\n### **GET /get-question-details/{id}**\n\n#### **Description**:\n\nFetch details of a specific question based on the question ID (`id`) and question type (`type`).\n\n#### **Path Parameters**:\n\n- **id**: (integer) The ID of the question to retrieve details for.\n    \n\n#### **Query Parameters**:\n\n- **type**: (required) The type of question. Valid values: `SST`, `RO`, `MCQ`.\n    \n\n#### **Request Example**:\n\n```\nhttp://localhost:8080/get-question-details/1?type=SST\n\n ```\n\n#### **Response**:\n\n##### **For** **`SST`** **type question**:\n\n**HTTP Status: 200 OK**\n\n``` json\n{\n  \"id\": 1,\n  \"title\": \"Sample SST Question\",\n  \"questionTimeLimit\": 60,\n  \"audios\": [\n    {\n      \"speaker\": \"Speaker 1\",\n      \"path\": \"path/to/audio1.mp3\"\n    },\n    {\n      \"speaker\": \"Speaker 2\",\n      \"path\": \"path/to/audio2.mp3\"\n    }\n  ]\n}\n\n ```\n\n**Fields**:\n\n- **id**: (integer) The question ID.\n    \n- **title**: (string) The title of the question.\n    \n- **questionTimeLimit**: (integer) Time limit for answering the question (in seconds).\n    \n- **audios**: (array of objects) List of audio files for the question, where:\n    \n    - **speaker**: (string) The speaker's name.\n        \n    - **path**: (string) The audio file path.\n        \n\n##### **For** **`RO`** **type question**:\n\n**HTTP Status: 200 OK**\n\n``` json\n{\n  \"id\": 2,\n  \"title\": \"Sample RO Question\",\n  \"paragraph\": [\n    {\n      \"id\": 1,\n      \"test\": \"First paragraph text\"\n    },\n    {\n      \"id\": 2,\n      \"test\": \"Second paragraph text\"\n    }\n  ],\n  \"correctOrder\": [1, 2]\n}\n\n ```\n\n**Fields**:\n\n- **id**: (integer) The question ID.\n    \n- **title**: (string) The title of the question.\n    \n- **paragraph**: (array of objects) A list of paragraphs associated with the question, where:\n    \n    - **id**: (integer) The paragraph ID.\n        \n    - **test**: (string) The paragraph text.\n        \n- **correctOrder**: (array of integers) The correct order of the paragraphs.\n    \n\n##### **For** **`MCQ`** **type question**:\n\n**HTTP Status: 200 OK**\n\n``` json\n{\n  \"id\": 3,\n  \"title\": \"Sample MCQ Question\",\n  \"options\": [\n    {\n      \"id\": 1,\n      \"option\": \"Option 1\"\n    },\n    {\n      \"id\": 2,\n      \"option\": \"Option 2\"\n    },\n    {\n      \"id\": 3,\n      \"option\": \"Option 3\"\n    }\n  ],\n  \"correctOption\": 2\n}\n\n ```\n\n**Fields**:\n\n- **id**: (integer) The question ID.\n    \n- **title**: (string) The title of the question.\n    \n- **options**: (array of objects) A list of options for the question, where:\n    \n    - **id**: (integer) The option ID.\n        \n    - **option**: (string) The option text.\n        \n- **correctOption**: (integer) The ID of the correct option."
+			},
+			"response": []
+		},
+		{
+			"name": "Get User History by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"description": "StartFragment\n\n### **GET /get-user-history**\n\n#### **Description**:\n\nFetch the user's history based on their `userId`. This will return a list of questions and the answers the user has submitted, along with their obtain and total marks for each question.\n\n#### **Path Parameters**:\n\n- **userId**: (integer) The ID of the user whose history you want to retrieve.\n    \n\n#### **Request Example**:\n\n```\nhttp://localhost:8080/get-user-history?userId=1\n\n ```\n\n#### **Response**:\n\n**HTTP Status: 200 OK**\n\nExample response for a list of user history items:\n\n``` json\n[\n  {\n    \"id\": 1,\n    \"userId\": 1,\n    \"questionId\": 101,\n    \"questionType\": \"SST\",\n    \"answer\": {\"selectedOption\": 2, \"timeTaken\": 30},\n    \"obtainMarks\": 4.5,\n    \"totalMarks\": 5.0,\n    \"createdAt\": \"2024-12-01T10:00:00Z\"\n  },\n  {\n    \"id\": 2,\n    \"userId\": 1,\n    \"questionId\": 102,\n    \"questionType\": \"RO\",\n    \"answer\": {\"order\": [3, 1, 2]},\n    \"obtainMarks\": 3.0,\n    \"totalMarks\": 5.0,\n    \"createdAt\": \"2024-12-01T11:00:00Z\"\n  }\n]\n\n ```\n\n**Fields**:\n\n- **id**: (integer) The unique ID of the user history entry.\n    \n- **userId**: (integer) The ID of the user.\n    \n- **questionId**: (integer) The ID of the question in the history.\n    \n- **questionType**: (string) The type of the question. Example values: `SST`, `RO`, `MCQ`.\n    \n- **answer**: (JSON object) The answer provided by the user. It can be of different shapes depending on the question type (e.g., `selectedOption`, `order`, etc.).\n    \n- **obtainMarks**: (float) The marks the user obtained for this question.\n    \n- **totalMarks**: (float) The total possible marks for this question.\n    \n- **createdAt**: (string, ISO8601 date-time format) The timestamp when the user's answer was submitted."
+			},
+			"response": []
+		},
+		{
+			"name": "Post Answer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080//submit-answer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"submit-answer"
+					]
+				},
+				"description": "### POST /submit-answer\n\n#### Description:\n\nThis API receives an answer from a user for a specific question and returns the user history for that submission. The answer format depends on the question type (`SST`, `RO`, `MCQ`).\n\n#### Request Body:\n\nContent-Type: application/json\n\n{  \n\"userId\": 1,  \n\"questionId\": 101,  \n\"questionType\": \"SST\",  \n\"answer\": \"This is a brief answer. It contains two sentences.\"  \n}\n\n##### Fields:\n\n- **userId**: (integer) The ID of the user submitting the answer.\n    \n- **questionId**: (integer) The ID of the question being answered.\n    \n- **questionType**: (string) The type of the question (`SST`, `RO`, `MCQ`).\n    \n- **answer**: (string, array, or integer) The user's answer:\n    \n    - **SST**: A string with 2-3 sentences.\n        \n    - **RO**: Array of integers (correct order of items).\n        \n    - **MCQ**: Integer (index of the selected option).\n        \n\n#### Response:\n\nHTTP Status: 200 OK\n\n{  \n\"id\": 1,  \n\"userId\": 1,  \n\"questionId\": 101,  \n\"questionType\": \"SST\",  \n\"answer\": \"This is a brief answer. It contains two sentences.\",  \n\"obtainMarks\": 5.0,  \n\"totalMarks\": 10.0,  \n\"createdAt\": \"2024-12-01T08:00:00Z\"  \n}\n\n##### Fields:\n\n- **id**: (integer) History record ID.\n    \n- **userId**: (integer) User ID.\n    \n- **questionId**: (integer) Question ID.\n    \n- **questionType**: (string) Type of the question (`SST`, `RO`, `MCQ`).\n    \n- **answer**: (string, array, or integer) The user's answer.\n    \n- **obtainMarks**: (float) Marks obtained for the answer.\n    \n- **totalMarks**: (float) Total marks for the question.\n    \n- **createdAt**: (string) Timestamp when the answer was submitted.\n    \n\n#### Error Responses:\n\n- **HTTP Status: 400 Bad Request**:  \n    {  \n    \"status\": \"error\",  \n    \"message\": \"Invalid request body or question type\"  \n    }\n    \n- **HTTP Status: 404 Not Found**:  \n    {  \n    \"status\": \"error\",  \n    \"message\": \"Question or user not found\"  \n    }\n    \n- **HTTP Status: 500 Internal Server Error**:  \n    {  \n    \"status\": \"error\",  \n    \"message\": \"Failed to submit answer\"  \n    }\n    \n\n#### How to Use in Postman:\n\n1. **Method**: POST\n    \n2. **URL**: `http://localhost:8080/submit-answer`\n    \n3. **Headers**:\n    \n    - `Content-Type: application/json`\n        \n4. **Body**: Choose `raw` and provide the appropriate JSON for the answer.\n    \n\n### Examples of Different Question Types:\n\n#### 1\\. SST (Short Answer):\n\n**Request**:\n\n{  \n\"userId\": 1,  \n\"questionId\": 101,  \n\"questionType\": \"SST\",  \n\"answer\": \"This is a brief answer. It contains two sentences.\"  \n}\n\n**Response**:\n\n{  \n\"id\": 1,  \n\"userId\": 1,  \n\"questionId\": 101,  \n\"questionType\": \"SST\",  \n\"answer\": \"This is a brief answer. It contains two sentences.\",  \n\"obtainMarks\": 5.0,  \n\"totalMarks\": 10.0,  \n\"createdAt\": \"2024-12-01T08:00:00Z\"  \n}\n\n#### 2\\. RO (Reordering):\n\n**Request**:\n\n{  \n\"userId\": 1,  \n\"questionId\": 102,  \n\"questionType\": \"RO\",  \n\"answer\": \\[3, 1, 2\\]  \n}\n\n**Response**:\n\n{  \n\"id\": 2,  \n\"userId\": 1,  \n\"questionId\": 102,  \n\"questionType\": \"RO\",  \n\"answer\": \\[3, 1, 2\\],  \n\"obtainMarks\": 2,  \n\"totalMarks\": 2,  \n\"createdAt\": \"2024-12-01T08:10:00Z\"  \n}\n\n#### 3\\. MCQ (Multiple Choice):\n\n**Request**:\n\n{  \n\"userId\": 1,  \n\"questionId\": 103,  \n\"questionType\": \"MCQ\",  \n\"answer\": 2  \n}\n\n**Response**:\n\n{  \n\"id\": 3,  \n\"userId\": 1,  \n\"questionId\": 103,  \n\"questionType\": \"MCQ\",  \n\"answer\": 2,  \n\"obtainMarks\": 1, // for wrong -1  \n\"totalMarks\": 1,  \n\"createdAt\": \"2024-12-01T08:20:00Z\"  \n}\n\n---\n\n---"
+			},
+			"response": []
+		}
+	]
+}

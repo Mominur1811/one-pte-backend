@@ -12,15 +12,13 @@ import (
 
 func StartRestServer(wg *sync.WaitGroup) {
 	conf := config.GetConfig()
-	router := gin.New()
+
 	if conf.Mode == config.ReleaseMode {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	// setup recovery middleware
-	router.Use(gin.Recovery())
+	router := gin.Default()
 
-	// setup cors
 	router.Use(cors.New(cors.Config{
 		AllowAllOrigins:  true,
 		AllowCredentials: true,
@@ -30,7 +28,7 @@ func StartRestServer(wg *sync.WaitGroup) {
 
 	router.GET("/hello", handlers.Hello)
 	router.GET("/get-questions", handlers.GetQuestions)
-	router.GET("/get-quetion-details", handlers.GetQuestionDetails)
+	router.GET("/get-question-details", handlers.GetQuestionDetails)
 	router.GET("/get-user-history", handlers.GetUserHistory)
 
 	router.POST("/submit-answer", handlers.SubmitAnswer)

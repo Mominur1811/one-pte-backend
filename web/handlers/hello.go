@@ -1,7 +1,10 @@
 package handlers
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"one-pte-backend/web/utils"
+)
 
-func Hello(g *gin.Context) {
-
+func Hello(c *gin.Context) {
+	utils.SendData(c, "OK")
 }

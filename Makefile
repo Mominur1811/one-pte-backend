@@ -11,9 +11,6 @@ MAKE_DEV_WIN := dev_win
 # Linux/macOS specific variables
 MAKE_DEV_LINUX := dev
 
-# Migration example (for documentation)
-MIGRATION_CREATE_EXAMPLE := migrate create -ext sql -seq -dir ./migrations alter_default_order_acceptance_amount_limit_at_rider_status_table
-
 # Run server for Linux/macOS
 run-server-linux:
 	${SERVER_CMD}

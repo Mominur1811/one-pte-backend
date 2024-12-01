@@ -22,7 +22,7 @@ tmp_dir = "tmp"
   post_cmd = []
   pre_cmd = []
   rerun = true
-  rerun_delay = 1000 # ms
+  rerun_delay = 5000 # ms
   send_interrupt = false
   stop_on_error = false
 
