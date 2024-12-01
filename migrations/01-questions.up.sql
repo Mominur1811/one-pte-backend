@@ -6,6 +6,3 @@ CREATE TABLE IF NOT EXISTS questions (
     type VARCHAR(10) NOT NULL, -- 'SST', 'RO', 'RMMCQ'
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- +migrate Down
-DROP TABLE IF EXISTS questions;

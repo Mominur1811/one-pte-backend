@@ -2,11 +2,11 @@ package web
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"log/slog"
 	"one-pte-backend/config"
 	"one-pte-backend/web/handlers"
-	"one-pte-backend/web/swagger"
 	"sync"
 )
 
@@ -27,11 +27,6 @@ func StartRestServer(wg *sync.WaitGroup) {
 		AllowMethods:     []string{"*"},
 		AllowHeaders:     []string{"*"},
 	}))
-
-	// setup handlers here
-	if conf.Mode != config.ReleaseMode {
-		swagger.SetupSwagger(router)
-	}
 
 	if conf.HealthCheckRoute != "" {
 		router.POST(conf.HealthCheckRoute, handlers.HealthCheck)

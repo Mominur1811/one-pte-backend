@@ -46,7 +46,7 @@ func (repo *QuestionRepo) CreateQuestionTx(tx *sql.Tx, qType, title string) (*nu
 	return &id, nil
 }
 
-func (repo *QuestionRepo) GetQuestions(qType string) ([]Question, error) {
+func (repo *QuestionRepo) GetQuestionsList(qType string) ([]Question, error) {
 
 	query := GetQueryBuilder().
 		Select("*").
@@ -78,4 +78,21 @@ func (repo *QuestionRepo) GetQuestions(qType string) ([]Question, error) {
 	}
 
 	return questions, nil
+}
+
+func (repo *QuestionRepo) GetTitleById(id int) (string, error) {
+
+	query := GetQueryBuilder().
+		Select("title").
+		From(repo.Table).
+		Where(sq.Eq{"id": id})
+
+	var title string
+
+	err := query.QueryRow().Scan(&title)
+	if err != nil {
+		return "", err
+	}
+
+	return title, nil
 }

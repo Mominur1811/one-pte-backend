@@ -1,0 +1,4 @@
+development:
+  dialect: postgres
+  datasource: postgres://admin:onepte@localhost:5433/onepte_db?sslmode=disable
+  dir: migrations

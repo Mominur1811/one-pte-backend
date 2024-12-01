@@ -5,5 +5,4 @@ CREATE TABLE IF NOT EXISTS mcq_questions (
    options JSONB NOT NULL,
    correct_option INT NOT NULL
 );
--- +migrate Down
-DROP TABLE IF EXISTS mcq_questions;
+

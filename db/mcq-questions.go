@@ -2,16 +2,17 @@ package db
 
 import (
 	"encoding/json"
+	sq "github.com/Masterminds/squirrel"
 )
 
-type McqOpstion struct {
+type McqOption struct {
 	Id     int    `json:"id"`
 	Option string `json:"option"`
 }
 
 type McqQuestion struct {
 	Id            int             `json:"id"`
-	Options       json.RawMessage `json:"options"`
+	Options       json.RawMessage `json:"options"` // [] McqOption
 	CorrectOption int             `json:"correctOption"`
 }
 
@@ -38,6 +39,22 @@ func (repo *McqQuestionRepo) InsertMcqQuestion(question McqQuestion) (*McqQuesti
 		Columns("id", "options", "correctOption").
 		Values(question.Id, question.Options, question.CorrectOption).
 		Suffix("RETURNING *")
+
+	var result McqQuestion
+
+	err := query.QueryRow().Scan(&result.Id, &result.Options, &result.CorrectOption)
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
+}
+
+func (repo *McqQuestionRepo) GetMcqQuestionById(id int) (*McqQuestion, error) {
+	query := GetQueryBuilder().
+		Select("id", "options", "correctOption").
+		From(repo.Table).
+		Where(sq.Eq{"id": id})
 
 	var result McqQuestion
 

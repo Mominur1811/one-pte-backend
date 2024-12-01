@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"one-pte-backend/config"
 	"one-pte-backend/db"
 	"one-pte-backend/web"
@@ -8,7 +9,7 @@ import (
 )
 
 type Application struct {
-	Wg *sync.WaitGroup
+	Wg sync.WaitGroup
 }
 
 func NewApplication() *Application {
@@ -16,12 +17,13 @@ func NewApplication() *Application {
 }
 
 func (r *Application) Init() {
+	fmt.Print("HIHIHI4445")
 	config.LoadConfig()
-	db.ConnectDB()
+	db.MigrateDB()
 }
 
 func (r *Application) Run() {
-	web.StartRestServer(r.Wg)
+	web.StartRestServer(&r.Wg)
 }
 
 func (r *Application) Wait() {

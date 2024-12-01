@@ -8,9 +8,9 @@ import (
 
 func GetQuestions(g *gin.Context) {
 
-	qType := g.Param("type")
+	qType := g.DefaultQuery("type", "")
 
-	questions, err := db.GetQuestionRepo().GetQuestions(qType)
+	questions, err := db.GetQuestionRepo().GetQuestionsList(qType)
 	if err != nil {
 		utils.SendError(g, 502, "Failed to get questions", "")
 		return

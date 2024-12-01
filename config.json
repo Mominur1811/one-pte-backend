@@ -4,14 +4,14 @@
   "http_port": 8080,
   "db": {
     "host": "localhost",
-    "port": 5432,
-    "name": "one_pte_db",
+    "port": 5433,
+    "name": "onepte_db",
     "user": "admin",
-    "pass": "admin",
+    "pass": "onepte",
     "max_idle_time_in_minute": 10,
-    "enable_ssl_mode": true
+    "enable_ssl_mode": false
   },
-  "migrations": "your_migrations_source",
+  "migrations":"migrations",
   "redis_url": "redis://localhost:6379",
   "health_check_route": "/health",
   "jwt_secret": "one_pte"

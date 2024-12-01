@@ -60,5 +60,4 @@ func CloseDB() {
 		return
 	}
 	slog.Info("Disconnected from database")
-
 }

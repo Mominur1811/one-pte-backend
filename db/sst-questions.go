@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	"encoding/json"
+	sq "github.com/Masterminds/squirrel"
 	"github.com/guregu/null"
 )
 
@@ -13,7 +14,7 @@ type AudioInfo struct {
 
 type SSTQuestions struct {
 	Id                null.Int        `json:"id"`
-	QuestionTimeLimit int             `json:"questionTimeLimit"`
+	QuestionTimeLimit int             `json:"questionTimeLimit"` //[]AudioInfo
 	Audio             json.RawMessage `json:"audio"`
 }
 
@@ -44,4 +45,20 @@ func (repo *SSTQuestionsRepo) InsertSSTQuestions(tx *sql.Tx, sstQuestions SSTQue
 		return err
 	}
 	return nil
+}
+
+func (repo *SSTQuestionsRepo) GetSSTQuestionDetails(id int) (*SSTQuestions, error) {
+	query := GetQueryBuilder().
+		Select("id", "questionTimeLimit", "audio").
+		From(repo.Table).
+		Where(sq.Eq{"id": id})
+
+	var sstQuestions SSTQuestions
+
+	err := query.QueryRow().Scan(sstQuestions.Id, sstQuestions.QuestionTimeLimit, sstQuestions.Audio)
+	if err != nil {
+		return nil, err
+	}
+
+	return &sstQuestions, nil
 }

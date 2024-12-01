@@ -6,5 +6,3 @@ CREATE TABLE IF NOT EXISTS sst_questions (
      answer_time_limit INTEGER NOT NULL,
      audio_files JSONB NOT NULL
 );
--- +migrate Down
-DROP TABLE IF EXISTS sst_questions;

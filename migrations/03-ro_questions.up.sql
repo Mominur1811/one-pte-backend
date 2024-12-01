@@ -6,5 +6,3 @@ CREATE TABLE IF NOT EXISTS ro_questions (
   correct_order INT[] NOT NULL
 );
 
--- +migrate Down
-DROP TABLE IF EXISTS ro_questions;
