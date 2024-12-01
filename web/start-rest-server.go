@@ -33,6 +33,11 @@ func StartRestServer(wg *sync.WaitGroup) {
 	}
 
 	router.GET("/hello", handlers.Hello)
+	router.GET("/get-questions", handlers.GetQuestions)
+	router.GET("/get-quetion-details", handlers.GetQuestionDetails)
+	router.GET("/get-user-history", handlers.GetUserHistory)
+
+	router.POST("/submit-answer", handlers.SubmitAnswer)
 
 	wg.Add(1)
 

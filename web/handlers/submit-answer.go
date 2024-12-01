@@ -31,7 +31,7 @@ func SubmitAnswer(g *gin.Context) {
 		return
 	}
 
-	userHistory, err = db.GetUserHistoryRepo().InsertUserHistory(userHistory)
+	userHistory, err = db.GetUserHistoryRepo().InsertUserHistory(*userHistory)
 	if err != nil {
 		utils.SendError(g, http.StatusBadRequest, "Failed to submit answer", "")
 		return

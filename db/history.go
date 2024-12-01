@@ -2,6 +2,7 @@ package db
 
 import (
 	"encoding/json"
+	sq "github.com/Masterminds/squirrel"
 	"time"
 )
 
@@ -66,4 +67,39 @@ func (repo *UserHistoryRepo) InsertUserHistory(userHistory UserHistory) (*UserHi
 	}
 
 	return &result, nil
+}
+
+func (repo *UserHistoryRepo) GetUserHistory(userId int, qType string) ([]UserHistory, error) {
+	query := GetQueryBuilder().
+		Select("").
+		From(repo.Table).
+		Where(sq.Eq{"user_id": userId})
+	if qType != "" {
+		query = query.Where(sq.Eq{"question_type": qType})
+	}
+
+	rows, err := query.Query()
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var result []UserHistory
+
+	for rows.Next() {
+		var row UserHistory
+		err := rows.Scan(row.ID, row.UserID, row.QuestionID, row.QuestionType, row.Answer, row.ObtainMarks, row.TotalMarks, row.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, row)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
