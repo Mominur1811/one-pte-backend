@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"one-pte-backend/config"
 	"one-pte-backend/db"
 	"one-pte-backend/web"
@@ -17,7 +16,6 @@ func NewApplication() *Application {
 }
 
 func (r *Application) Init() {
-	fmt.Print("HIHIHI4445")
 	config.LoadConfig()
 	db.MigrateDB()
 }

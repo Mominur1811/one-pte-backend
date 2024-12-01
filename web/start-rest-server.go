@@ -28,10 +28,6 @@ func StartRestServer(wg *sync.WaitGroup) {
 		AllowHeaders:     []string{"*"},
 	}))
 
-	if conf.HealthCheckRoute != "" {
-		router.POST(conf.HealthCheckRoute, handlers.HealthCheck)
-	}
-
 	router.GET("/hello", handlers.Hello)
 	router.GET("/get-questions", handlers.GetQuestions)
 	router.GET("/get-quetion-details", handlers.GetQuestionDetails)
